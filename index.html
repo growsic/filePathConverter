@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ファイルパス変換</title>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <script src="js/vue.js"></script>
+</head>
+<body class="container">
+
+    <h1>ファイルパス変換</h1>
+  <div id="filePassConverter">
+    <div class="row, well">
+      <h1>Win→Mac</h1>
+
+    <div class="well">
+      <INPUT type="text" name="ファイルパスinput" v-model="winPathInput" style="width:100%">
+    </div>
+    <div class="well alert-success">
+      Mac用ファイルパス：{{winToMac}}
+    </div>
+  </div>
+  <div id="filePassConverter">
+    <div class="row, well">
+      <h1>Mac→Win</h1>
+
+    <div class="well">
+      <INPUT type="text" name="ファイルパスinput" v-model="macPathInput" style="width:100%">
+    </div>
+    <div class="well alert-info">
+      Win用ファイルパス：{{macToWin}}
+    </div>
+  </div>
+<footer>
+  <h6>Copyright &copy; 2015 growsic</h6>
+</footer>
+
+</body>
+<script type="text/javascript">
+  var counter = new Vue({
+
+    el: '#filePassConverter',
+
+    data: {
+      winPathInput: "",
+      macPathInput: ""
+    },
+
+    computed: {
+            winToMac: function () {
+                if(this.winPathInput != "") {
+                  return "smb:" + this.winPathInput.replace(/\\/g ,"/");
+                }
+            },
+            macToWin: function () {
+              if(this.macPathInput != "") {
+                return this.macPathInput.replace("smb:", "")
+                                        .replace("Smb:", "")
+                                        .replace(/\//g ,"\\");
+              }
+            }
+
+    }
+  })
+</script>
+</html>
