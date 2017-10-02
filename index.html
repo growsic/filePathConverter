@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,7 +57,8 @@
             },
             macToWin: function () {
               if(this.macPathInput != "") {
-                return this.macPathInput.replace("smb:", "")
+                return this.macPathInput.normalize()
+                                        .replace("smb:", "")
                                         .replace("Smb:", "")
                                         .replace(/\//g ,"\\");
               }
