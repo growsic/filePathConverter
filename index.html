@@ -6,11 +6,12 @@
   <meta charset="UTF-8">
   <title>ファイルパス変換</title>
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/tooltip_custom.css">
   <link rel="shortcut icon" href="img/favicon.ico">
   <script src="js/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js"></script>
 </head>
 <body class="container">
-
     <h1>ファイルパス変換</h1>
   <div id="filePassConverter">
     <div class="row, well">
@@ -19,9 +20,12 @@
     <div class="well">
       <INPUT type="text" name="ファイルパスinput" v-model="winPathInput" style="width:100%">
     </div>
-    <div class="well alert-success">
-      Mac用ファイルパス：{{winToMac}}
+    <p>Mac用ファイルパス</p>
+    <div class="well alert-success clipArea tooltip_custom" data-clipboard-target="#macFilePath">
+        <div id=macFilePath>{{winToMac}}</div>
+        <span class="tooltiptext_custom">クリックするとコピーされます</span>
     </div>
+
   </div>
   <div id="filePassConverter">
     <div class="row, well">
@@ -30,8 +34,10 @@
     <div class="well">
       <INPUT type="text" name="ファイルパスinput" v-model="macPathInput" style="width:100%">
     </div>
-    <div class="well alert-info">
-      Win用ファイルパス：{{macToWin}}
+    <p>Win用ファイルパス</p>
+    <div class="well alert-info clipArea tooltip_custom" data-clipboard-target="#winFilePath" alt="Copy to clipboard">
+      <div id=winFilePath>{{macToWin}}</div>
+      <span class="tooltiptext_custom">クリックするとコピーされます</span>
     </div>
   </div>
 <footer>
@@ -40,6 +46,16 @@
 
 </body>
 <script type="text/javascript">
+  var clipboard = new Clipboard('.clipArea');
+  clipboard.on('success', function(e) {
+    console.info('Action:', e.action);
+    console.info('Text:', e.text);
+    console.info('Trigger:', e.trigger);
+    e.clearSelection();
+  });
+
+
+
   var counter = new Vue({
 
     el: '#filePassConverter',
